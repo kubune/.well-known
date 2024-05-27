@@ -149,7 +149,7 @@
 </head>
 <body>
     <div id="topnav">
-        <img src="../../assets/icon.gif" width="64" height="64" style="position: absolute; margin-top: 5px; margin-left: 10px;"/>
+        <img src="assets/icon.gif" width="64" height="64" style="position: absolute; margin-top: 5px; margin-left: 10px;"/>
         <div id="toptext">Brawl Nova</div>
     </div>
     <div class="container">
@@ -337,7 +337,16 @@
         document.getElementById('inputForm').addEventListener('submit', function(event) {
             event.preventDefault();
             const userInput = document.getElementById('userInput').value;
-            const apiUrl = `https://corsproxy.io/?https://api.hpdevfox.ru/profile/${userInput}`;
+
+            let processedInput = userInput;
+            if (processedInput.startsWith('#')) {
+                processedInput = processedInput.slice(1);
+            }
+
+            processedInput = processedInput.toUpperCase();
+
+            const apiUrl = `https://corsproxy.io/?https://api.hpdevfox.ru/profile/${processedInput}`;
+
 
             fetch(apiUrl)
                 .then(response => response.json())
