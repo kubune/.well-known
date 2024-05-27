@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Player Info</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            overflow-y: scroll;
+        }
+
+        .container {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 1200px;
+            margin: 20px auto;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        input[type="text"] {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            border: none;
+            border-radius: 4px;
+            background-color: #007BFF;
+            color: white;
+            cursor: pointer;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+
+        .response {
+            margin-top: 20px;
+            text-align: left;
+            word-wrap: break-word;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+            overflow-x: auto;
+            display: block;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+        }
+
+        th, td {
+            padding: 8px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        .table-container {
+            overflow-x: auto;
+        }
+
+        .sort-options {
+            margin-bottom: 20px;
+        }
+
+        @media (max-width: 600px) {
+            input[type="text"] {
+                width: calc(100% - 16px);
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Check your profile</h1>
+        <form id="inputForm">
+            <label for="userInput">Enter your tag(No # everything CAPS):</label>
+            <input type="text" id="userInput" name="userInput" required>
+            <input type="submit" value="Submit">
+        </form>
+        <div class="response" id="response"></div>
+    </div>
+
+    <script>
+        document.getElementById('inputForm').addEventListener('submit', function(event) {
+            event.preventDefault();
+            const userInput = document.getElementById('userInput').value;
+            const apiUrl = `https://corsproxy.io/?https://api.hpdevfox.ru/profile/${userInput}`;
+
+            fetch(apiUrl)
+                .then(response => response.json())
+                .then(data => {
+                    displayResponse(data);
+                })
+                .catch(error => {
+                    document.getElementById('response').innerHTML = `<p style="color: red;">Error: ${error.message}</p>`;
+                });
+        });
+
+        function displayResponse(data) {
+            const responseDiv = document.getElementById('response');
+            responseDiv.innerHTML = '';
+
+            // Displaying basic info
+            const basicInfo = `
+                <h2>Basic Information</h2>
+                <p><strong>Name:</strong> ${data.response.Name}</p>
+                <p><strong>Name Color:</strong> ${data.response.NameColor}</p>
+                <p><strong>Profile Icon:</strong> ${data.response.ProfileIcon}</p>
+                <p><strong>Account ID:</strong> High: ${data.response.AccountId.High}, Low: ${data.response.AccountId.Low}</p>
+                <p><strong>Battle Card:</strong> Emoji: ${data.response.BattleCard.Emoji}, First Icon: ${data.response.BattleCard.FirstIcon}, Second Icon: ${data.response.BattleCard.SecondIcon}, Title: ${data.response.BattleCard.Title}</p>
+                <p><strong>Brawl Pass:</strong> ${data.response.BrawlPass}</p>
+                <p><strong>Favorite Brawler:</strong> ${data.response.FavouriteBrawler}</p>
+                <p><strong>Favorite Skin:</strong> ${data.response.FavouriteSkin}</p>
+            `;
+
+            // Displaying stats
+            const stats = data.response.Stats;
+            let statsTable = '<h2>Stats</h2><div class="table-container"><table><tr><th>Stat ID</th><th>Value</th></tr>';
+            for (const [key, value] of Object.entries(stats)) {
+                statsTable += `<tr><td>${key}</td><td>${value}</td></tr>`;
+            }
+            statsTable += '</table></div>';
+
+            // Sorting options
+            const sortOptions = `
+                <div class="sort-options">
+                    <label for="sortCriteria">Sort Heroes by:</label>
+                    <select id="sortCriteria">
+                        <option value="Character">Character</option>
+                        <option value="HighestTrophies">Highest Trophies</option>
+                        <option value="Mastery">Mastery</option>
+                        <option value="Power">Power</option>
+                        <option value="Skin">Skin</option>
+                        <option value="Trophies">Trophies</option>
+                    </select>
+                </div>
+            `;
+
+            // Displaying heroes
+            const heroes = data.response.Heroes;
+            let heroesTable = '<h2>Heroes</h2><div class="table-container"><table id="heroesTable"><thead><tr><th>Character</th><th>Highest Trophies</th><th>Mastery</th><th>Power</th><th>Skin</th><th>Trophies</th></tr></thead><tbody>';
+            heroes.forEach(hero => {
+                heroesTable += `
+                    <tr>
+                        <td>${hero.Character}</td>
+                        <td>${hero.HighestTrophies}</td>
+                        <td>${hero.Mastery}</td>
+                        <td>${hero.Power}</td>
+                        <td>${hero.Skin}</td>
+                        <td>${hero.Trophies}</td>
+                    </tr>
+                `;
+            });
+            heroesTable += '</tbody></table></div>';
+
+            responseDiv.innerHTML = basicInfo + statsTable + sortOptions + heroesTable;
+
+            // Adding event listener for sorting
+            document.getElementById('sortCriteria').addEventListener('change', function() {
+                sortHeroesTable(heroes, this.value);
+            });
+        }
+
+        function sortHeroesTable(heroes, criteria) {
+            const heroesTableBody = document.querySelector('#heroesTable tbody');
+            let sortedHeroes = [...heroes];
+
+            sortedHeroes.sort((a, b) => {
+                if (a[criteria] < b[criteria]) return 1;
+                if (a[criteria] > b[criteria]) return -1;
+                return 0;
+            });
+
+            // Rebuilding the table body
+            heroesTableBody.innerHTML = '';
+            sortedHeroes.forEach(hero => {
+                heroesTableBody.innerHTML += `
+                    <tr>
+                        <td>${hero.Character}</td>
+                        <td>${hero.HighestTrophies}</td>
+                        <td>${hero.Mastery}</td>
+                        <td>${hero.Power}</td>
+                        <td>${hero.Skin}</td>
+                        <td>${hero.Trophies}</td>
+                    </tr>
+                `;
+            });
+        }
+    </script>
+</body>
+</html>
