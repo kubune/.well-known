@@ -13,7 +13,7 @@
             const battle = urlParams.get('battle');
             // If 'battle' parameter exists, redirect to the brawlstars URL
             if (battle) {
-                const redirectUrl = `brawlstars://createAndJoinTeam?roomname=${battle}&friendly=1`;
+                const redirectUrl = `brawlstars://createAndJoinRoom?roomname=${battle}&friendly=1`;
                 window.location.href = redirectUrl;
             } else {
                 // If 'battle' parameter is missing, show an error message
