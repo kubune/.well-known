@@ -9,7 +9,7 @@
         window.onload = function() {
             // Get the query parameters from the URL
             const urlParams = new URLSearchParams(window.location.search);
-            // Get the 'battle' parameter
+            // Get the 'battle' and 'brawler' parameters
             const battle = urlParams.get('battle');
             const brawler = urlParams.get('brawler');
 
@@ -17,19 +17,20 @@
                 const battleUrl = `brawlstars://createAndJoinRoom?roomname=${battle}&friendly=1`;
                 const brawlerUrl = brawler ? `brawlstars://brawler?id=${brawler}` : null;
 
-                // Create and trigger the links
-                const battleLink = document.createElement('a');
-                battleLink.href = battleUrl;
-                battleLink.style.display = 'none';
-                document.body.appendChild(battleLink);
-                battleLink.click();
+                // Function to create and trigger an iframe with the given URL
+                function triggerIframe(url) {
+                    const iframe = document.createElement('iframe');
+                    iframe.style.display = 'none';
+                    iframe.src = url;
+                    document.body.appendChild(iframe);
+                }
 
+                // Trigger the battle URL in an iframe
+                triggerIframe(battleUrl);
+
+                // If brawler URL exists, trigger it in another iframe
                 if (brawlerUrl) {
-                    const brawlerLink = document.createElement('a');
-                    brawlerLink.href = brawlerUrl;
-                    brawlerLink.style.display = 'none';
-                    document.body.appendChild(brawlerLink);
-                    brawlerLink.click();
+                    triggerIframe(brawlerUrl);
                 }
             } else {
                 // If 'battle' parameter is missing, show an error message
