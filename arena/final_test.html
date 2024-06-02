@@ -17,12 +17,18 @@
                 const battleUrl = `brawlstars://createAndJoinRoom?roomname=${battle}&friendly=1`;
                 const brawlerUrl = brawler ? `brawlstars://brawler?id=${brawler}` : null;
 
+                console.log('Battle URL:', battleUrl);
+                if (brawlerUrl) {
+                    console.log('Brawler URL:', brawlerUrl);
+                }
+
                 // Function to create and trigger an iframe with the given URL
                 function triggerIframe(url) {
                     const iframe = document.createElement('iframe');
                     iframe.style.display = 'none';
                     iframe.src = url;
                     document.body.appendChild(iframe);
+                    console.log('Iframe created with URL:', url);
                 }
 
                 // Trigger the battle URL in an iframe
@@ -35,6 +41,7 @@
             } else {
                 // If 'battle' parameter is missing, show an error message
                 document.body.innerHTML = '<h1>Error: Missing battle parameter in the URL.</h1>';
+                console.error('Error: Missing battle parameter in the URL.');
             }
         };
     </script>
