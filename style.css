@@ -159,7 +159,7 @@ body {
 .funImage {
     width: 50%;
     
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
     margin: auto;
     margin-top: 5%;
     float: inline-end;
@@ -167,7 +167,7 @@ body {
 .funImage > img {
     padding: 10%;
     width: 80%;
-    aspect-ratio: 4 / 3;
+    aspect-ratio: 1 / 1;
     margin: auto 0;
     border-radius: 65px;
 }
