@@ -2,7 +2,6 @@ html,
 body,
 section {
     block-size: 100%;
-    overflow-x: hidden;
 }
 
 html {
@@ -28,6 +27,7 @@ body {
     background-repeat: no-repeat;
     background-attachment: fixed;
     background-position: center;
+    overflow-x: hidden;
 }
 
 .bg {
