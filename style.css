@@ -122,8 +122,8 @@ body {
 .function {
     max-width: 1000px;
     width: 1000px;
-    max-height: 500px;
-    height: 500px;
+    max-height: 800px;
+    height: 800px;
     margin: auto;
     border-radius: 20px;
     /* From https://css.glass */
@@ -144,7 +144,7 @@ body {
     padding-right: 0;
 }
 .funName {
-    height: 30%;
+    height: 50%;
     width: 100%;
     margin-top: auto;
     text-align: center;
