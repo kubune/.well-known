@@ -2,6 +2,7 @@ html,
 body,
 section {
     block-size: 100%;
+    overflow-x: hidden;
 }
 
 html {
@@ -143,7 +144,7 @@ body {
     padding-right: 0;
 }
 .funName {
-    height: 40%;
+    height: 30%;
     width: 100%;
     margin-top: auto;
     text-align: center;
