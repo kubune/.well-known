@@ -92,9 +92,13 @@ body {
     font-size: large;
     box-shadow: 0 0 5px #000;
     cursor: pointer;
-
+    animation: box-move 1s infinite alternate-reverse;
+    transition: transform 300ms;
+    transform-origin: center;
 }
-
+.buttonAdd:hover {
+    transform: scale(1.2);
+}
 .content {
     height: 100vh;
     position: relative;
