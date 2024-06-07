@@ -227,7 +227,7 @@ body {
         float: inline-start;
     }
     .funImage > img { 
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 1 / 1;
     }
     .funInfo { 
         height: 50%;
@@ -268,7 +268,7 @@ body {
 
     }
     .funImage > img { 
-        aspect-ratio: 4 / 3;
+        aspect-ratio: 1 / 1;
         
     }
     .funInfo { 
