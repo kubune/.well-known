@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Profile</title>
+    <script>
+        async function fetchUrls(player) {
+            try {
+                const url1 = `https://corsproxy.io/?https://bsproxy.royaleapi.dev/player/%23${player}`;
+                const url2 = `https://corsproxy.io/?https://api.hpdevfox.ru/profile/${player}`;
+
+                const headers = {
+                    "Authorization": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiIsImtpZCI6IjI4YTMxOGY3LTAwMDAtYTFlYi03ZmExLTJjNzQzM2M2Y2NhNSJ9.eyJpc3MiOiJzdXBlcmNlbGwiLCJhdWQiOiJzdXBlcmNlbGw6Z2FtZWFwaSIsImp0aSI6ImVmYTI2MDQ2LWQwNTktNDdmZS05Y2E2LTI3ZWU0ZGQwMmJhYiIsImlhdCI6MTcxNzk1NzgyMywic3ViIjoiZGV2ZWxvcGVyL2IyYWQ1ZWY5LTRiOTctODg0OS0xOGRhLWM5NTJhYzFmNGQyNiIsInNjb3BlcyI6WyJicmF3bHN0YXJzIl0sImxpbWl0cyI6W3sidGllciI6ImRldmVsb3Blci9zaWx2ZXIiLCJ0eXBlIjoidGhyb3R0bGluZyJ9LHsiY2lkcnMiOlsiNDUuNzkuMjE4Ljc5Il0sInR5cGUiOiJjbGllbnQifV19.dD8p4Y80pKNqgv6dEew64uIcOVYT7ES9sMdrEbrXTBvSn3PMTPeLZIK0Mf6hbzJCy-Qy1kB36LGlmdytJswIbA"
+                };
+
+                const [response1, response2] = await Promise.all([
+                    fetch(url1, { headers: headers }),
+                    fetch(url2)
+                ]);
+
+                const data1 = await response1.json();
+                const data2 = await response2.json();
+
+                const combinedData = {
+                    official: data1,
+                    hpdevfox: data2,
+                };
+
+                document.body.textContent = JSON.stringify(combinedData, null, 2);
+            } catch (error) {
+                document.body.textContent = '{"error": "yes"}';
+            }
+        }
+
+        window.onload = function() {
+            const pathParts = window.location.pathname.split('/');
+            const player = pathParts[pathParts.length - 1] || 'defaultPlayerValue';
+            fetchUrls(player);
+        };
+    </script>
+</head>
+<body>
+</body>
+</html>
