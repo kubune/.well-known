@@ -12,6 +12,7 @@ section {
     scroll-snap-align: start;
     scroll-snap-stop: always;
     display: flex;
+    margin: 0 10px;
 }
 
 
@@ -217,9 +218,6 @@ body {
 }
 
 @media only screen and (max-width: 700px) {
-    section {
-        margin: auto; /* margin: 0 10px; */
-    }
     .function {
         height: 800px;
         max-height: 800px;
