@@ -90,7 +90,7 @@ body {
     font-family: "Lilita One", sans-serif;
     padding: 0 20px;
     font-size: large;
-    box-shadow: 0 0 5px #000;
+    box-shadow: 0 0 5px #fff;
     cursor: pointer;
     animation: box-move 1s infinite alternate-reverse;
     transition: transform 300ms;
