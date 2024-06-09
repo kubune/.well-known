@@ -28,6 +28,7 @@
 
                 document.body.textContent = JSON.stringify(combinedData, null, 2);
             } catch (error) {
+                console.log(error);
                 document.body.textContent = '{"error": "yes"}';
             }
         }
