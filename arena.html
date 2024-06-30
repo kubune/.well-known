@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arena Starting...</title>
+    <script>
+        // This script runs when the page loads
+        window.onload = function() {
+            // Get the query parameters from the URL
+            const urlParams = new URLSearchParams(window.location.search);
+            // Get the 'battle' parameter
+            const battle = urlParams.get('battle');
+            // If 'battle' parameter exists, redirect to the brawlstars URL
+            if (battle) {
+                const redirectUrl = `brawlstars://createAndJoinRoom?roomname=${battle}&friendly=1`;
+                window.location.href = redirectUrl;
+            } else {
+                // If 'battle' parameter is missing, show an error message
+                document.body.innerHTML = '<h1>Error: Missing battle parameter in the URL.</h1>';
+            }
+        };
+    </script>
+</head>
+<body>
+    <h1>Starting arena... </h1>
+</body>
+</html>
